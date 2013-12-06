@@ -175,7 +175,7 @@ int RoomManager::leaveRoom(int playerID)
 
 int RoomManager::startGame(int roomID)
 {
-	// TODO stub
+	std::thread thread;
 	return 0;
 }
 

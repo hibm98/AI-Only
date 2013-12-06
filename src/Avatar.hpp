@@ -47,6 +47,7 @@ public:
 
 	void attacked(int amount);
 	void healed(int amount);
+	void suiside();
 	void rest();
 
 	// getter

@@ -13,6 +13,7 @@
 #include <random>
 #include <chrono>
 #include <thread>
+#include <string>
 
 #include "luacppinterface/luacppinterface.h"
 
@@ -34,6 +35,7 @@ class Game
 	std::vector<AvatarPtr> avatar_queue;
 	GameMap map;
 	GameResult result;
+	std::string whyDraw;
 
 	void prepare();
 	void ingame();

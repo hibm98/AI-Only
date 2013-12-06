@@ -93,6 +93,11 @@ void Avatar::healed(int amount)
 		currentHP += amount;
 }
 
+void Avatar::suiside()
+{
+	currentHP = 0;
+}
+
 bool Avatar::isDead() const
 {
 	return (currentHP <= 0);

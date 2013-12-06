@@ -37,8 +37,8 @@ class PlayerListTest : public ::testing::Test
 protected:
 	virtual void SetUp()
 	{
-		test_players.insertPlayer(std::make_shared<AIOnly::Player>("Tester1", "tests/user_Tester1_script.lua", 1));
-		test_players.insertPlayer(std::make_shared<AIOnly::Player>("Tester2", "tests/user_Tester2_script.lua", 2));
+		test_players.insertPlayer(std::make_shared<AIOnly::Player>("Tester1", "tests/Tester1.lua", 1));
+		test_players.insertPlayer(std::make_shared<AIOnly::Player>("Tester2", "tests/Tester2.lua", 2));
 	}
 
 	AIOnly::PlayerList test_players;
@@ -75,7 +75,7 @@ TEST_F(PlayerListTest, GetPlayersInfo)
 
 	ASSERT_EQ(1, std::get<0>(*(players_info->begin())));
 	ASSERT_STREQ("Tester1", std::get<1>(*(players_info->begin())).c_str());
-	ASSERT_STREQ("tests/user_Tester1_script.lua", std::get<2>(*(players_info->begin())).c_str());
+	ASSERT_STREQ("tests/Tester1.lua", std::get<2>(*(players_info->begin())).c_str());
 }
 
 // 서버에서 특정 사용자의 객체를 반환받는 동작.

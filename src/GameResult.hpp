@@ -32,12 +32,14 @@ class GameResult
 {
 	GameResultCode result;
 	PlayerListPtr winners;
+	std::string _whyDraw;
 
 public:
-	GameResult(GameResultCode code = GameResultCode::PLEASE_SET_RESULTCODE);
+	GameResult(GameResultCode code = GameResultCode::PLEASE_SET_RESULTCODE, const std::string& whyDraw = std::string());
 	virtual ~GameResult();
 
 	GameResultCode getResultCode() const;
+	const std::string& whyDraw() const;
 
 	void addWinner(PlayerPtr winner);
 	const PlayerListPtr getWinners() const;

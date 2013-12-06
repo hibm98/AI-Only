@@ -1,4 +1,3 @@
-function turn()
-	walk(0);
-	attack(0);
-end
+walk(0);
+attack(0);
+suiside();

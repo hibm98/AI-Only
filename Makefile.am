@@ -17,6 +17,7 @@ lib_libaionly_a_SOURCES = src/Avatar.cpp \
 						  src/Game.cpp \
 						  src/GameMap.cpp \
 						  src/GameResult.cpp \
+						  src/Logger.cpp \
 						  src/MapTile.cpp \
 						  src/Player.cpp \
 						  src/PlayerList.cpp \
@@ -40,7 +41,8 @@ check_PROGRAMS = tests/bin/TestAvatar \
 				 tests/bin/TestServerCmdParser \
 				 tests/bin/TestRunScriptWithHook \
 				 tests/bin/TestMapTile \
-				 tests/bin/TestGameMap
+				 tests/bin/TestGameMap \
+				 tests/bin/TestLogger
 
 tests_bin_TestAvatar_SOURCES = tests/TestAvatar.cpp
 tests_bin_TestAvatar_LDADD = $(Require_library) -l${Test_library}
@@ -68,6 +70,9 @@ tests_bin_TestMapTile_LDADD = $(Require_library) -l$(Test_library)
 
 tests_bin_TestGameMap_SOURCES = tests/TestGameMap.cpp
 tests_bin_TestGameMap_LDADD = $(Require_library) -l$(Test_library)
+
+tests_bin_TestLogger_SOURCES = tests/TestLogger.cpp
+tests_bin_TestLogger_LDADD = $(Require_library) -l$(Test_library)
 
 # tests_bin_TestServer_SOURCES = tests/TestServer.cpp
 # tests_bin_TestServer_LDADD = $(Require_library) -l${Test_library}

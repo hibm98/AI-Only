@@ -10,8 +10,8 @@
 namespace AIOnly
 {
 
-GameResult::GameResult(GameResultCode code)
-	: result(code)
+GameResult::GameResult(GameResultCode code, const std::string& whyDraw)
+	: result(code), _whyDraw(whyDraw)
 {
 	// 원래 승자 목록도 이곳 생성자에 만들어두면 좋겠으나,
 	// 오류만 내는 경우나 무승부인 경우에 불필요하게 빈 승자목록을 만드는 것은
@@ -26,6 +26,11 @@ GameResult::~GameResult()
 GameResultCode GameResult::getResultCode() const
 {
 	return result;
+}
+
+const std::string& GameResult::whyDraw() const
+{
+	return _whyDraw;
 }
 
 void GameResult::addWinner(PlayerPtr winner)

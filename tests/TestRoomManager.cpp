@@ -43,12 +43,12 @@ protected:
 	virtual void SetUp()
 	{
 		//// Add some player ////
-		test_room.createPlayer("Tester1", "tests/user_Tester1_script.lua", 1);
-		test_room.createPlayer("Tester2", "tests/user_Tester2_script.lua", 2);
-		test_room.createPlayer("Tester3", "tests/user_Tester1_script.lua", 3);
-		test_room.createPlayer("Tester4", "tests/user_Tester2_script.lua", 4);
-		test_room.createPlayer("Tester5", "tests/user_Tester1_script.lua", 5);
-		test_room.createPlayer("Tester6", "tests/user_Tester2_script.lua", 6);
+		test_room.createPlayer("Tester1", "tests/Tester1.lua", 1);
+		test_room.createPlayer("Tester2", "tests/Tester2.lua", 2);
+		test_room.createPlayer("Tester3", "tests/Tester1.lua", 3);
+		test_room.createPlayer("Tester4", "tests/Tester2.lua", 4);
+		test_room.createPlayer("Tester5", "tests/Tester1.lua", 5);
+		test_room.createPlayer("Tester6", "tests/Tester2.lua", 6);
 
 		//// Add some room ////
 		// Room 1
@@ -84,12 +84,12 @@ TEST_F(PlayerManageTest, GetAllPlayerInfo)
 
 	ASSERT_EQ(std::get<0>(*it), 1);
 	ASSERT_STREQ(std::get<1>(*it).c_str(), "Tester1");
-	ASSERT_STREQ(std::get<2>(*it).c_str(), "tests/user_Tester1_script.lua");
+	ASSERT_STREQ(std::get<2>(*it).c_str(), "tests/Tester1.lua");
 
 	it++;
 	ASSERT_EQ(std::get<0>(*it), 2);
 	ASSERT_STREQ(std::get<1>(*it).c_str(), "Tester2");
-	ASSERT_STREQ(std::get<2>(*it).c_str(), "tests/user_Tester2_script.lua");
+	ASSERT_STREQ(std::get<2>(*it).c_str(), "tests/Tester2.lua");
 }
 
 TEST_F(PlayerManageTest, SearchNotEnteredPlayerByIdTest)

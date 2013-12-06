@@ -13,6 +13,7 @@
 #include <tuple>
 #include <vector>
 #include <mutex>
+#include <thread>
 
 #include "Player.hpp"
 #include "PlayerList.hpp"

@@ -107,25 +107,47 @@ void Game::ingame()
 			return (int)map.attack(current, tmp);
 		};
 
+	auto suiside_func = [&]() -> void
+		{
+			current->suiside();
+		};
+
 	// ***** 함수를 등록하는 단계. *****
 	auto lua_walkfunc = engine.CreateFunction<int(int)>(walk_func);
 	auto lua_attackfunc = engine.CreateFunction<int(int)>(attack_func);
+	auto lua_suisidefunc = engine.CreateFunction<void()>(suiside_func);
 
 	global.Set("walk", lua_walkfunc);
 	global.Set("attack", lua_attackfunc);
+	global.Set("suiside", lua_suisidefunc);
 
 	// ***** 최초 실행 준비 *****
 	// 이제 게임을 시작하기 위해 이터레이터를 생성한다.
 	auto it = avatar_queue.begin();
+	int count = 100 * avatar_queue.size();	// 턴 제한횟수
 
 	// 이제 순서에 따라 코드를 실행한다. (게임이 끝날 때까지 무한 반복)
 	while (true)
 	{
+		// 턴 카운터가 0이면 무승부로 결정짓는다.
+		if (count-- <= 0)
+		{
+			whyDraw = "Reached count limit(100)";
+			break;
+		}
+
 		current = (*it);
-		std::this_thread::sleep_for(onestep);
+		//std::this_thread::sleep_for(onestep);
 
 		// ***** 코드를 실행하는 단계. *****
 		std::string result = engine.RunScriptWithHook(current->getCode(), 1000);
+		if (result != "No errors")
+		{
+			// 일단 정상적으로 끝난것이 아니다.
+			// 실행 횟수 초과로 끝난 것이 아닌지(컴파일 에러 등...) 판단하여 아니라면 아바타를 자살시켜버린다.
+			if (result != "Error: Time exceed.\n")
+				current->suiside();
+		}
 
 		// ***** 다음 순서를 결정하는 단계. ******
 		// 먼저 죽은 아바타가 있으면 지워준다.
@@ -149,8 +171,15 @@ void Game::ingame()
 void Game::cleanup()
 {
 	// 최후의 아바타를 가져온다.
-	result = GameResult(GameResultCode::WIN);
-	result.addWinner(_players->getPlayer(avatar_queue[0]->getAvatarID()));
+	if (avatar_queue.size() == 1)
+	{
+		result = GameResult(GameResultCode::WIN);
+		result.addWinner(_players->getPlayer(avatar_queue[0]->getAvatarID()));
+	}
+	else
+	{
+		result = GameResult(GameResultCode::DRAW, whyDraw);
+	}
 
 	// 게임 기록을 DB에 저장.
 	std::locale::global(std::locale("ko_KR.utf8"));
@@ -159,7 +188,10 @@ void Game::cleanup()
 	std::strftime(now_time, 100, "%c", std::localtime(&t));
 
 	std::ofstream fout("Result_" + std::string(now_time) + ".txt");
-	fout << "Winner : " << avatar_queue[0]->getName() << std::endl;
+	if (result.getResultCode() == GameResultCode::WIN)
+		fout << "Winner : " << avatar_queue[0]->getName() << std::endl;
+	else
+		fout << "Draw... (" << result.whyDraw() << ")" << std::endl;
 	fout.close();
 }
 
