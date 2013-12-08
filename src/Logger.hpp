@@ -10,26 +10,42 @@
 
 #include <string>
 #include <memory>
+#include <iostream>
 #include <fstream>
-#include <sstream>
+#include <random>
+#include <chrono>
+#include <ctime>
 
 namespace AIOnly
 {
+
+enum class LogLevel { ERR, WARN, INFO, DEBUG };
 
 /*
  *
  */
 class Logger
 {
-	std::fstream 		_logfile;
-	std::stringstream	_log;
+	std::ofstream 	_logfile;
+	std::string		_log;
+	bool 			_print_log;
 
-	bool _print_log;
+	std::string getTimeString() const;
+	inline std::string getFormattedLog(LogLevel level, const std::string& context) const;
 
 public:
+
 	Logger(bool print_log = false);
 	Logger(const char* fileName, bool print_log = false);
 	virtual ~Logger();
+
+	bool openFile(const std::string& fileName, bool copy_current_log = false);
+	inline void closeFile();
+
+	void write(LogLevel level, const std::string& context);
+	inline void clear();
+
+	const std::string& getLog() const;
 };
 
 } /* namespace AIOnly */
