@@ -175,7 +175,8 @@ int RoomManager::leaveRoom(int playerID)
 
 int RoomManager::startGame(int roomID)
 {
-	std::thread thread;
+	Game g(std::get<RoomPrivateInfo_TupleType::PLAYERLIST>(rooms[roomID]));
+	g.run();
 	return 0;
 }
 

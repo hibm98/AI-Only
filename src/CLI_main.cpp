@@ -225,7 +225,23 @@ int main(void)
 
 		case AIOnly::ServerCmdType::START_GAME:
 		{
-			// TODO
+			if (parser.getArgSize() < 1)
+			{
+				cout << "Usage: start_game <room id>" << endl;
+				break;
+			}
+
+			int roomID;
+			try {
+				roomID = parser.getArgSize() == 1 ? std::stoi(parser.getArg(0)) : 0 ;
+			}
+			catch (std::exception& e)
+			{
+				cout << "Invaild Room ID. (" << parser.getArg(1) << ")" << endl;
+				break;
+			}
+
+			rooms.startGame(roomID);
 			break;
 		}
 
