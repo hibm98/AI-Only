@@ -10,10 +10,9 @@
 
 #include <memory>
 #include <vector>
-#include <random>
-#include <chrono>
 #include <thread>
 #include <string>
+#include <sstream>
 
 #include "luacppinterface/luacppinterface.h"
 
@@ -21,6 +20,7 @@
 #include "Avatar.hpp"
 #include "GameMap.hpp"
 #include "MapTile.hpp"
+#include "Logger.hpp"
 #include "GameResult.hpp"
 
 namespace AIOnly
@@ -33,7 +33,9 @@ class Game
 {
 	PlayerListPtr _players;
 	std::vector<AvatarPtr> avatar_queue;
+	Logger logger;
 	GameMap map;
+
 	GameResult result;
 	std::string whyDraw;
 

@@ -46,6 +46,7 @@ public:
 	inline void clear();
 
 	const std::string& getLog() const;
+	void echoLog(bool echoable);
 };
 
 } /* namespace AIOnly */

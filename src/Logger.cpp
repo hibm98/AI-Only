@@ -103,4 +103,9 @@ const std::string& Logger::getLog() const
 	return _log;
 }
 
+void Logger::echoLog(bool echoable)
+{
+	_print_log = echoable;
+}
+
 } /* namespace AIOnly */
