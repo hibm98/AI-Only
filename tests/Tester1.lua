@@ -1,3 +1,3 @@
-walk(0);
+walk(3);
 attack(0);
 suiside();

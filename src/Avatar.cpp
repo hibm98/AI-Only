@@ -93,7 +93,7 @@ void Avatar::healed(int amount)
 		currentHP += amount;
 }
 
-void Avatar::suiside()
+void Avatar::suicide()
 {
 	currentHP = 0;
 }

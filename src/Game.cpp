@@ -136,23 +136,23 @@ void Game::ingame()
 			return (int)map.attack(current, tmp);
 		};
 
-	auto suiside_func = [&]() -> void
+	auto suicide_func = [&]() -> void
 		{
 			logt << current->getName() << "(" << current->getAvatarID() << ")이/가 자살합니다...";
 			logger.write(LogLevel::INFO, logt.str());
 			logt.str("");
 
-			current->suiside();
+			current->suicide();
 		};
 
 	// ***** 함수를 등록하는 단계. *****
 	auto lua_walkfunc = engine.CreateFunction<int(int)>(walk_func);
 	auto lua_attackfunc = engine.CreateFunction<int(int)>(attack_func);
-	auto lua_suisidefunc = engine.CreateFunction<void()>(suiside_func);
+	auto lua_suicidefunc = engine.CreateFunction<void()>(suicide_func);
 
 	global.Set("walk", lua_walkfunc);
 	global.Set("attack", lua_attackfunc);
-	global.Set("suiside", lua_suisidefunc);
+	global.Set("suicide", lua_suicidefunc);
 
 	// ***** 최초 실행 준비 *****
 	logger.write(LogLevel::INFO, "게임 준비가 완료되었습니다. 게임을 시작합니다.");
@@ -195,7 +195,7 @@ void Game::ingame()
 				logger.write(LogLevel::ERR, "현재 아바타의 코드에 문제가 있어서 행동할 수 없습니다!");
 				logger.write(LogLevel::ERR, result);
 
-				current->suiside();
+				current->suicide();
 				logger.write(LogLevel::ERR, "해당 아바타는 플레이어를 원망하면서 자폭하였습니다.");
 			}
 			else
@@ -222,6 +222,9 @@ void Game::ingame()
 		// 만약 남은 아바타가 한 명 이하라면 게임을 종료한다.
 		if (avatar_queue.size() <= 1)
 			break;
+
+		// SP를 충전한다.
+		current->rest();
 
 		// 이제 다음 아바타로 넘어간다.
 		++it;
